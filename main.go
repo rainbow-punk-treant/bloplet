@@ -3,12 +3,12 @@ package main
 import (
   "fmt"
   "os"
-
+  "github.com/microcosm-cc/bluemonday"
   "github.com/gin-gonic/gin"
   "io/ioutil"
 )
 
-const PATH = "super/"
+const PATH = "/home/weasel/go/src/gitlab.com/entro-pi/supercut/super/"
 
 func main() {
   fmt.Println("Doot")
@@ -16,11 +16,15 @@ func main() {
   server := gin.Default()
   server.GET("/home", index)
   server.NoRoute(index)
-  server.Static("/img", "super/img")
+  server.Static("/assets", "/home/weasel/go/src/gitlab.com/entro-pi/supercut/super/")
 
   server.Run(":80")
 }
 
+func getIt(c *gin.Context) {
+  policy := bluemonday.UGCPolicy()
+  policy.Sanitize("no")
+}
 
 func index(c *gin.Context) {
   output := ""
@@ -41,7 +45,7 @@ func index(c *gin.Context) {
       }
       c.Writer.Write(payload)
       //c.File(PATH+"/index_feader.html")
-      pictureDir, err := ioutil.ReadDir(PATH+"img")
+      pictureDir, err := ioutil.ReadDir(PATH+"/img")
       if err != nil {
         panic(err)
       }
@@ -52,9 +56,9 @@ func index(c *gin.Context) {
         }else {
           continue
         }
-        item := `<a href="img/`+pic.Name()+`" data-caption="testing lightbox">
+        item := `<a href="assets/img/`+pic.Name()+`" data-caption="testing lightbox">
 
-            <img src="img/`+pic.Name()+`" width="250px" height="300px" alt="First image">
+            <img src="assets/img/`+pic.Name()+`" width="250px" height="300px" alt="First image">
 
             </a>`
         item0 := `<div class="gallery" style="margin: 0 auto;">`
