@@ -58,7 +58,7 @@ func index(c *gin.Context) {
         }
         item := `<a href="assets/img/`+pic.Name()+`" data-caption="testing lightbox">
 
-            <img src="assets/img/`+pic.Name()+`" width="250px" height="300px" alt="First image">
+            <img src="assets/img/`+pic.Name()+`" width="39px" height="39px" style="border-radius: 50%;" alt="First image">
 
             </a>`
         item0 := `<div class="gallery" style="margin: 0 auto;">`
@@ -73,7 +73,7 @@ func index(c *gin.Context) {
         }
       }
 
-      c.Writer.Write([]byte(output))
+      //c.Writer.Write([]byte(output))
       file, err = os.Open(PATH+"/index_hooter.html")
       if err != nil {
         panic(err)

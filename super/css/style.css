@@ -3,6 +3,20 @@
   margin: 0 auto;
   width: 50%;
 }
+.picture {
+  width: 200px;
+  height: 200px;
+}
+.container {
+  background-color: White;
+  border-radius: 15px;
+  width: 500px;
+  height: 76px;
+}
+.text {
+  align: right;
+  font-size: 8;
+}
 
 body {
   background-color: SlateGray;
