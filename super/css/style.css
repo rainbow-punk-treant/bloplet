@@ -1,4 +1,9 @@
 .content {
-  background-color: SlateGray;
+  background-color: DarkGray;
   margin: 0 auto;
+  width: 50%;
+}
+
+body {
+  background-color: SlateGray;
 }
