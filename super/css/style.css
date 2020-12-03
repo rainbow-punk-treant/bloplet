@@ -3,19 +3,26 @@
   margin: 0 auto;
   width: 50%;
 }
-.picture {
-  width: 200px;
-  height: 200px;
-}
 .container {
   background-color: White;
   border-radius: 15px;
-  width: 500px;
-  height: 76px;
+  width: 50%;
+  height: 96px;
+}
+.picture {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  align:left;
+  margin: 4px;
 }
 .text {
+  margin: 5px;
   align: right;
   font-size: 8;
+  width: 420px;
+  height: 50px;
+
 }
 
 body {
