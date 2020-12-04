@@ -27,7 +27,7 @@ func getIt(c *gin.Context) {
   policy := bluemonday.UGCPolicy()
   policy.Sanitize("no")
 }
-func proccessString(inputs []string, s string) {
+func processString(inputs map[string]string, s string) string {
   output := ""
   r := len(strings.Split(s, "::"))
   v := strings.Split(s, "::")
@@ -35,14 +35,16 @@ func proccessString(inputs []string, s string) {
     output += v[0]
     switch v[i] {
     case "URL":
-      output += inputs[1]
+      output += inputs[v[i]]
     case "URI":
-      output += inputs[0]
+      output += inputs[v[i]]
     default:
       //none
     }
     output += v[2]
     }
+
+    return output
   }
 
 
@@ -58,6 +60,18 @@ func index(c *gin.Context) {
     </div>
 </div>`
   output := ""
+  payloadAlpha := make(map[string]string, 35)
+  payloadBeta := make(map[string]string, 35)
+
+  payloadAlpha["URL"] = "https://gitlab.com/entro-pi/supercut"
+  payloadAlpha["URI"] = "assets/img/cc.png"
+  payloadBeta["URL"] = "https://gitlab.com/entro-pi/snowfone"
+  payloadBeta["URI"] = "assets/img/knoife.png"
+
+  stringPayload := processString(payloadAlpha, links)
+  stringPayload += processString(payloadBeta, links)
+
+
   dir, err := ioutil.ReadDir(PATH)
   if err != nil {
     panic(err)
@@ -74,7 +88,9 @@ func index(c *gin.Context) {
         panic(err)
       }
       c.Writer.Write(payload)
+      c.Writer.Write([]byte(stringPayload))
       //c.File(PATH+"/index_feader.html")
+
       pictureDir, err := ioutil.ReadDir(PATH+"/img")
       if err != nil {
         panic(err)
