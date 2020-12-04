@@ -29,33 +29,27 @@ func getIt(c *gin.Context) {
 }
 func processString(inputs map[string]string, s string) string {
   output := ""
-  r := len(strings.Split(s, "::"))
+  //r := len(strings.Split(s, "::"))
   v := strings.Split(s, "::")
-  for i := 0;i < r;i++ {
     output += v[0]
-    switch v[i] {
-    case "URL":
-      output += inputs[v[i]]
-    case "URI":
-      output += inputs[v[i]]
-    default:
-      //none
-    }
+
+    output += inputs["URL"]
     output += v[2]
-    }
+    output += inputs["URI"]
+    output += v[4]
 
     return output
-  }
+}
 
 
 func index(c *gin.Context) {
   links := `<div class="container">
-      <a href="+"::URL::"+">
+      <a href="::URL::">
       <div class="picture">
         <img class="picture" src="::URI::"></img>
       </a><div class="text">
         This website, it is written in Golang, serves http currently and this is
-        a thumbnail embeddable link.
+        a thumbnail embeddable link. And now it is a template action to be applied.
         </div>
     </div>
 </div>`
