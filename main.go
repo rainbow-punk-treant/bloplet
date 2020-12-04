@@ -41,8 +41,7 @@ func processString(inputs map[string]string, s string) string {
     return output
 }
 
-
-func index(c *gin.Context) {
+func populate(uri string, url string) string {
   links := `<div class="container">
       <a href="::URL::">
       <div class="picture">
@@ -53,17 +52,31 @@ func index(c *gin.Context) {
         </div>
     </div>
 </div>`
-  output := ""
-  payloadAlpha := make(map[string]string, 35)
-  payloadBeta := make(map[string]string, 35)
 
-  payloadAlpha["URL"] = "https://gitlab.com/entro-pi/supercut"
-  payloadAlpha["URI"] = "assets/img/cc.png"
-  payloadBeta["URL"] = "https://gitlab.com/entro-pi/snowfone"
-  payloadBeta["URI"] = "assets/img/knoife.png"
+  payloadAlpha := make(map[string]string, 35)
+
+  payloadAlpha["URL"] = url
+  payloadAlpha["URI"] = uri
 
   stringPayload := processString(payloadAlpha, links)
-  stringPayload += processString(payloadBeta, links)
+
+  return stringPayload
+
+}
+
+
+func index(c *gin.Context) {
+  output := ""
+
+  //Define your payloads
+  pl := "https://gitlab.com/entro-pi/supercut"
+  pi := "assets/img/cc.png"
+  pbl := "https://gitlab.com/entro-pi/snowfone"
+  pbi := "assets/img/knoife.png"
+
+  //Format  your payloads
+  stringPayload := populate(pi, pl)
+  stringPayload += populate(pbi, pbl)
 
 
   dir, err := ioutil.ReadDir(PATH)
