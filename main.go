@@ -3,6 +3,7 @@ package main
 import (
   "fmt"
   "os"
+  "strings"
   "github.com/microcosm-cc/bluemonday"
   "github.com/gin-gonic/gin"
   "io/ioutil"
@@ -14,6 +15,7 @@ func main() {
   fmt.Println("Doot")
 
   server := gin.Default()
+  server.GET("/", index)
   server.GET("/home", index)
   server.NoRoute(index)
   server.Static("/assets", "/home/weasel/go/src/gitlab.com/entro-pi/supercut/super/")
@@ -25,8 +27,36 @@ func getIt(c *gin.Context) {
   policy := bluemonday.UGCPolicy()
   policy.Sanitize("no")
 }
+func proccessString(inputs []string, s string) {
+  output := ""
+  r := len(strings.Split(s, "::"))
+  v := strings.Split(s, "::")
+  for i := 0;i < r;i++ {
+    output += v[0]
+    switch v[i] {
+    case "URL":
+      output += inputs[1]
+    case "URI":
+      output += inputs[0]
+    default:
+      //none
+    }
+    output += v[2]
+    }
+  }
+
 
 func index(c *gin.Context) {
+  links := `<div class="container">
+      <a href="+"::URL::"+">
+      <div class="picture">
+        <img class="picture" src="::URI::"></img>
+      </a><div class="text">
+        This website, it is written in Golang, serves http currently and this is
+        a thumbnail embeddable link.
+        </div>
+    </div>
+</div>`
   output := ""
   dir, err := ioutil.ReadDir(PATH)
   if err != nil {
