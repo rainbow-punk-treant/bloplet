@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-rsync -vr . root@alibi.network:/home/weasel/go/src/gitlab.com/entro-pi/supercut
+rsync -vr . root@134.122.37.138:/home/weasel/go/src/gitlab.com/entro-pi/supercut
