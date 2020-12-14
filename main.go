@@ -12,25 +12,21 @@ import (
 )
 
 func main() {
-	fmt.Println("Doot")
+	fmt.Println("bloplet v1.0 Author rainbow_punk_treant")
+	if len(os.Args) < 3 || len(os.Args) > 3 {
+		fmt.Println("Usage is \033[38;2;0;200;0mbloplet \033[38;2;150;0;150musername \033[38;2;50;100;100mURL\033[0m")
+		os.Exit(1)
+	}
 
 	USER := os.Args[1]
+	URL := os.Args[2]
 
 	server := gin.Default()
 	server.GET("/", index)
 	server.GET("/home", index)
 	server.NoRoute(index)
 	server.Static("/assets", "/home/"+USER+"/go/src/github.com/rainbow-punk-treant/bloplet/super/")
-	autotls.Run(server, "the.terrible.download")
-	shown := false
-	for {
-		if !shown {
-			fmt.Println("Cbreak to end!")
-			shown = true
-		}
-	}
-	//server.RunTLS("the.terrible.download")
-	//server.Run(":80")
+	autotls.Run(server, URL)
 }
 
 func getIt(c *gin.Context) {
