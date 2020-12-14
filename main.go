@@ -90,7 +90,7 @@ func index(c *gin.Context) {
 	}
 	for _, val := range dir {
 		if val.Name() == "img" {
-			file, err := os.Open(PATH + "/index_feader.html")
+			file, err := os.Open(PATH + "/head.html")
 			if err != nil {
 				panic(err)
 			}
@@ -132,7 +132,7 @@ func index(c *gin.Context) {
 			}
 
 			//c.Writer.Write([]byte(output))
-			file, err = os.Open(PATH + "/index_hooter.html")
+			file, err = os.Open(PATH + "/foot.html")
 			if err != nil {
 				panic(err)
 			}
