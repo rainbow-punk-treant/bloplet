@@ -11,18 +11,24 @@ import (
 	"github.com/microcosm-cc/bluemonday"
 )
 
-const PATH = "/home/weasel/go/src/gitlab.com/entro-pi/supercut/super/"
-
 func main() {
 	fmt.Println("Doot")
+
+	USER := os.Args[1]
 
 	server := gin.Default()
 	server.GET("/", index)
 	server.GET("/home", index)
 	server.NoRoute(index)
-	server.Static("/assets", "/home/weasel/go/src/gitlab.com/entro-pi/supercut/super/")
-
+	server.Static("/assets", "/home/"+USER+"/go/src/github.com/rainbow-punk-treant/bloplet/super/")
 	autotls.Run(server, "the.terrible.download")
+	shown := false
+	for {
+		if !shown {
+			fmt.Println("Cbreak to end!")
+			shown = true
+		}
+	}
 	//server.RunTLS("the.terrible.download")
 	//server.Run(":80")
 }
@@ -70,6 +76,7 @@ func populate(uri string, url string) string {
 
 func index(c *gin.Context) {
 	output := ""
+	PATH := "/home/" + os.Args[1] + "/go/src/github.com/rainbow-punk-treant/bloplet/super/"
 
 	//Define your payloads
 	pl := "https://gitlab.com/entro-pi/supercut"
