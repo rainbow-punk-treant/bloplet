@@ -71,7 +71,6 @@ func populate(uri string, url string) string {
 }
 
 func index(c *gin.Context) {
-	output := ""
 	PATH := "/home/" + os.Args[1] + "/go/src/github.com/rainbow-punk-treant/bloplet/super/"
 
 	//Define your payloads
@@ -100,38 +99,19 @@ func index(c *gin.Context) {
 				panic(err)
 			}
 			c.Writer.Write(payload)
-			c.Writer.Write([]byte(stringPayload))
-			//c.File(PATH+"/index_feader.html")
+			// Uncomment this line to add populated() links
+			// c.Writer.Write([]byte(stringPayload))
 
-			pictureDir, err := ioutil.ReadDir(PATH + "/img")
+			file, err = os.Open(PATH + "/body.html")
 			if err != nil {
 				panic(err)
 			}
-
-			for i, pic := range pictureDir {
-				if len(pic.Name()) > 2 {
-					//do thing!
-				} else {
-					continue
-				}
-				item := `<a href="assets/img/` + pic.Name() + `" data-caption="testing lightbox">
-
-            <img src="assets/img/` + pic.Name() + `" width="39px" height="39px" style="border-radius: 50%;" alt="First image">
-
-            </a>`
-				item0 := `<div class="gallery" style="margin: 0 auto;">`
-				end := false
-				if i == 0 {
-					output += item0
-					end = true
-				}
-				output += item
-				if end {
-					output += `</div>`
-				}
+			payload, err = ioutil.ReadAll(file)
+			if err != nil {
+				panic(err)
 			}
+			c.Writer.Write([]byte(payload))
 
-			//c.Writer.Write([]byte(output))
 			file, err = os.Open(PATH + "/foot.html")
 			if err != nil {
 				panic(err)
